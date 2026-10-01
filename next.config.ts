@@ -8,6 +8,9 @@ import type { NextConfig } from "next";
 const MEDIA_CACHE = "public, max-age=604800, stale-while-revalidate=86400";
 
 const nextConfig: NextConfig = {
+  // Don't auto-generate AGENTS.md / CLAUDE.md on `next dev`.
+  agentRules: false,
+
   images: {
     // AVIF first for the hero screens; WebP fallback.
     formats: ["image/avif", "image/webp"],
