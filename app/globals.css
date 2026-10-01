@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   AstroLok design tokens
+   ------------------------------------------------------------------ */
+@theme {
+  --color-void: #03050f; /* matches the frame backgrounds, used around canvases */
+  --color-navy-950: #080b2a;
+  --color-navy-900: #0b1235;
+  --color-navy-800: #161d45;
+  --color-ink: #0b1235;
+  --color-cream: #fff8ec;
+  --color-cream-soft: #fff3dc;
+  --color-cream-deep: #fbe7bf;
+  --color-gold: #f2b43a;
+  --color-gold-bright: #f5ae1b;
+  --color-gold-dark: #d99508;
+  --color-muted: #6e7488;
+  --color-line: #e8dfd0;
+  --color-frame-bg: #03050f;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Viewports shorter than a typical phone: used to compact the reading stage */
+@custom-variant short (@media (max-height: 740px));
+
+:root {
+  --header-h: 64px;
+  --stage-top: 0px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 76px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-cream-deep);
+  color: var(--color-navy-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-dark);
+  outline-offset: 3px;
+}
+
+@layer components {
+  /* Widths are art-directed per section: wide (hero, readings, footer),
+     medium-wide (process), narrow (pricing, FAQ). */
+  .container-page,
+  .container-medium,
+  .container-narrow {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  .container-page {
+    max-width: 78rem;
+  }
+  .container-medium {
+    max-width: 66rem;
+  }
+  .container-narrow {
+    max-width: 46rem;
+  }
+  @media (min-width: 640px) {
+    .container-page,
+    .container-medium,
+    .container-narrow {
+      padding-inline: 2rem;
+    }
+  }
+
+  .heading-section {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+    text-wrap: balance;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Welcome intro (components/WelcomeIntro.tsx)
+   `intro-done` / `intro-lock` are set on <html> by the inline script in
+   app/layout.tsx before first paint.
+   ------------------------------------------------------------------ */
+.intro-done #welcome-intro {
+  display: none;
+}
+.intro-lock,
+.intro-lock body {
+  overflow: hidden;
+}
+
+@keyframes intro-breathe {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: translateY(2px) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.04);
+  }
+}
+@keyframes intro-ripple {
+  from {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+@keyframes intro-hint {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
